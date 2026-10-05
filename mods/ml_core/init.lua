@@ -12,6 +12,9 @@ local function boot()
 	ml.storage:set_int("wave", 0)
 	ml.storage:set_int("creeps_alive", 0)
 	ml.storage:set_int("lotus", 0)
+	ml.storage:set_int("cyclops", 0)
+	ml.storage:set_int("wine", 0)
+	ml.storage:set_int("blinded", 0)
 	ml.storage:set_string("outcome", "")
 	ml.storage:set_string("ready", "1")
 end
@@ -27,10 +30,13 @@ function ml.outcome()
 end
 
 function ml.task_line()
-	if ml.storage:get_int("lotus") == 1 then
-		return "Lotus refused. Next stop is not built: the cyclops."
+	if ml.storage:get_int("lotus") ~= 1 then
+		return "Lotus-eaters: right-click the lotus stand and refuse it."
 	end
-	return "Lotus-eaters: right-click the lotus stand and refuse it."
+	if ml.storage:get_int("cyclops") ~= 1 then
+		return "Cyclops: cave east of the path. Wine, then the stake, then the mouth."
+	end
+	return "You slipped out of the cave. Next stop is not built: the bag of winds."
 end
 
 function ml.gold(player)
@@ -92,9 +98,11 @@ function ml.check_end()
 		minetest.chat_send_all("The hall fell. Ithaca is lost.")
 		return
 	end
-	if ml.storage:get_int("lotus") == 1 and ml.storage:get_int("wave") == 2 then
+	if ml.storage:get_int("lotus") == 1
+		and ml.storage:get_int("cyclops") == 1
+		and ml.storage:get_int("wave") == 2 then
 		ml.storage:set_string("outcome", "win")
-		minetest.chat_send_all("The lotus is refused and the hall still stands. Next stop is not built: the cyclops.")
+		minetest.chat_send_all("The lotus is refused, the cave is behind you, and the hall still stands. Next stop is not built: the bag of winds.")
 	end
 end
 
@@ -122,7 +130,7 @@ function ml.refuse_lotus(player)
 	if minetest.registered_items["ml_items:voyage_token"] then
 		inv:add_item("main", "ml_items:voyage_token")
 	end
-	minetest.chat_send_all("Odysseus refuses the lotus and moves on.")
+	minetest.chat_send_all("Odysseus refuses the lotus. The cyclops cave is east of the path.")
 	ml.check_end()
 	return true, "Lotus refused."
 end
@@ -189,6 +197,9 @@ minetest.register_chatcommand("ml_reset", {
 		ml.storage:set_int("wave", 0)
 		ml.storage:set_int("creeps_alive", 0)
 		ml.storage:set_int("lotus", 0)
+		ml.storage:set_int("cyclops", 0)
+		ml.storage:set_int("wine", 0)
+		ml.storage:set_int("blinded", 0)
 		ml.storage:set_string("outcome", "")
 		local player = minetest.get_player_by_name(name)
 		if player then
@@ -196,6 +207,9 @@ minetest.register_chatcommand("ml_reset", {
 		end
 		if ml.clear_suitors then
 			ml.clear_suitors()
+		end
+		if ml.clear_cyclops then
+			ml.clear_cyclops()
 		end
 		if ml.build_map then
 			ml.build_map()
