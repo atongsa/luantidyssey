@@ -94,18 +94,18 @@ Workers, a build menu, and towers are not the game. They are not scheduled. Gold
 
 ## Built now
 
-- singlenode pad, the hall, two gold stones, a lotus stand
-- the player is Odysseus, with a sword, gold, experience, a text HUD, and the journal in slot 2
+- Greek shore: sea, sand, marble court, columns, bronze altar, offerings, olives, lotus stand
+- the player is Odysseus, with a bronze sword, gold, experience, a text HUD, and the journal in slot 2
 - four skills, each rank 0 to 3, one point to learn or upgrade
 - one wave: three suitors plus one lead suitor
-- suitors hurt the player if they stand on him
-- win if the lotus is refused, all four are dead, and the hall is above 0
+- cyclops cave east of the path. Wine, then the stake, then the mouth. The sword cannot kill him.
+- win if the lotus is refused, the cave is escaped, the suitors are dead, and the hall is above 0
 - lose if the hall reaches 0
 - `/ml` prints status. `/ml_reset` (server privilege) resets the slice and gives one skill point
 
-Only the lotus stop exists. The cyclops is next in the story and is not built.
+The bag of winds is next and is not built.
 
-Not built: Greek models (the pad is still flat colors), stops after the lotus. Not wanted: a locked camera, a strategy base, a second player, a DotA match.
+Not built: stops after the cyclops, carved statues. Not wanted: a locked camera, a strategy base, a second player, a DotA match.
 
 ## Repository map
 
@@ -119,7 +119,8 @@ Not built: Greek models (the pad is still flat colors), stops after the lotus. N
 | `ml_core` | Hall life, gold, experience, levels, skill points, win and loss |
 | `ml_journal` | The four skills and their ranks |
 | `ml_camera` | A one-time look tilt. Not a special camera. Leave it. |
-| `ml_map` | Pad, hall, gold stones, lotus stand |
+| `ml_map` | Greek shore |
+| `ml_cyclops` | Cave, wine, stake, mouth, the giant |
 | `ml_creeps` | Three suitors and one lead suitor |
 | `ml_heroes` | The player as Odysseus, plus a sword. `heroes/hero_example.lua` is not loaded |
 | `ml_items` | One voyage token when the lotus is refused |
@@ -129,10 +130,10 @@ Not built: Greek models (the pad is still flat colors), stops after the lotus. N
 
 1. The hero starts on the shore after the war. The hall on Ithaca already exists and is already under pressure.
 2. One skill point is waiting. Spend it on one of the four skills.
-3. The hero clears voyage stops in the story order. Only the lotus exists.
+3. The hero refuses the lotus, then escapes the cyclops cave. Later stops are not built.
 4. Suitors walk an authored path toward the hall.
 5. Each level gives one more skill point.
-6. The journey ends in the hall, or earlier if the hall falls.
+6. The journey ends when those stops are done and the hall still stands, or earlier if the hall falls.
 
 Numbers that are not written here get decided when that system is built, then written into this file in place of this sentence.
 
