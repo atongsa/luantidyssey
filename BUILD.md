@@ -1,7 +1,7 @@
 BUILD.md
 Read GAME_MODE.md first. This file is only how to continue the build. It is not a second design.
 
-Last session: 2026-10-03. Repo atongsa/luantidyssey, branch main.
+Last session: 2026-10-05. Repo atongsa/luantidyssey, branch main.
 The game id and the install folder are luantidyssey. It is not a DotA game.
 Not run inside Luanti from the agent side. The owner tests on a laptop or desktop.
 
@@ -15,84 +15,63 @@ START HERE NEXT SESSION
 2. Read this file.
 3. Do not rebuild the slice. It already runs.
 4. Next unfinished work, unless GAME_MODE.md now says otherwise:
-   The next story stop only: the cyclops. Do not jump ahead in the poem list.
-   Greek look is in as simple nodes, not statues. Do not restart it unless the owner asks.
+   The next story stop only: the bag of winds. Do not jump ahead in the poem list.
+   Cyclops and the Greek shore are in. Do not restart them unless the owner asks.
 5. Same commit rules: message starts with "code from man_grok", then what, then the time.
 6. New idea with no overlap: add it to GAME_MODE.md. Overlap: rewrite that old idea only.
 7. Append CHANGES.log when the repo changes. Do not paste the chat into GAME_MODE.md.
 
 --------------------------------------------------------------------------------
+CYCLOPS
+--------------------------------------------------------------------------------
+
+mods/ml_cyclops/init.lua. Cave east of the path, around x=10, z=18 to 24.
+Order: refuse the lotus, right-click the wine bowl while he is near, right-click the stake, right-click the cave mouth.
+He chases if awake. Wine dulls him. The stake blinds him. The mouth is the escape.
+Punching cannot kill him. At 0 life he stays at 1 and the chat says to use the wine.
+Storage: wine, blinded, cyclops (1 = escaped), cave_ver.
+Win needs lotus + cyclops escaped + suitor wave cleared + hall above 0.
+Restart Luanti after pulling so the new mod loads. The cave places itself when cave_ver is below 1.
+
+--------------------------------------------------------------------------------
 GREEK LOOK
 --------------------------------------------------------------------------------
 
-mods/ml_map/init.lua. Textures are written into the world folder and sent with dynamic_add_media.
-Sea, sand, marble court, stone path, marble columns, terracotta lintels, bronze altar (the hall), bronze offerings (the gold), olive and a lotus stand.
-Sky is a pale day blue. Spawn is 0, 9, -8.
-Old worlds rebuild when look_ver is below 2. That runs on load. Rejoin after pulling.
-Not carved statues. Not a mesh hero.
+mods/ml_map/init.lua. Sea, sand, marble court, stone path, columns, lintels, bronze altar, offerings, olives, lotus.
+Spawn is 0, 9, -8. look_ver 2.
 
 --------------------------------------------------------------------------------
 WHAT ALREADY RUNS
 --------------------------------------------------------------------------------
 
-Luanti game. Copy the repo folder into the user games directory as luantidyssey.
-Reopen the world after pulling so the shore rebuilds. Or make a new world.
-Game name luantidyssey. Mapgen is forced to singlenode in ml_map.
-If an old folder is still named luanti_dotA, replace it.
-Details of paths and the zip: PACKAGING.log. License is MIT (LICENSE, README.md).
-
-Player is Odysseus. Spawn 0, 9, -8.
-Slot 1 bronze sword ml_heroes:ash_sword. Slot 2 journal ml_journal:book.
+Player is Odysseus. Slot 1 bronze sword. Slot 2 journal.
 Punch the bronze offerings for +5. Right-click the lotus stand to refuse it.
-About 12s later: 3 suitors plus 1 lead suitor walk +z toward the hall.
-Win: lotus refused, all four dead, hall above 0. Lose: hall at 0.
+About 12s later: 3 suitors plus 1 lead suitor walk toward the hall.
 Commands: /ml  /journal  /skill armor|weapon|fruit|blood  /ml_reset (priv server).
 
 --------------------------------------------------------------------------------
 FOUR SKILLS
 --------------------------------------------------------------------------------
 
-Code: mods/ml_journal/init.lua. Points are added in mods/ml_core/init.lua ml.add_xp.
-One point at the start. One more point each time xp crosses 10.
-Ranks 0 to 3. Meta keys: ml_points, ml_rank_armor, ml_rank_weapon, ml_rank_fruit, ml_rank_blood.
-Old saves that only had ml_owned get rank 1 on join.
-
-armor  Bronze voice   stun 2/3/4s. Touch damage falls with rank. ml.touch_damage in ml_creeps.
-weapon Brand          bonus punch 6/10/16 for 6/8/10s. ml.punch_bonus, applied in ml_creeps on_punch.
-fruit  Bitter fruit   heal 12/16/20 toward a cap of 20, plus a little gold.
-blood  Cut the vein   cut 12/18/24. If current hp is at or under the cut, the suitor dies.
+mods/ml_journal/init.lua and ml.add_xp in mods/ml_core/init.lua.
+Ranks 0 to 3. Meta: ml_points, ml_rank_armor, ml_rank_weapon, ml_rank_fruit, ml_rank_blood.
+Blood and Bronze voice hit suitors, not the cyclops. That is on purpose.
 
 --------------------------------------------------------------------------------
 FILES
 --------------------------------------------------------------------------------
 
-mods/ml_core/init.lua     hall, gold, xp, levels, points, win/lose, /ml, /ml_reset
-mods/ml_journal/init.lua  the four skills
-mods/ml_map/init.lua      Greek shore. ml.build_map. look_ver 2
-mods/ml_creeps/init.lua   suitors, lead, stun, wave. entity ml_creeps:suitor
-mods/ml_heroes/init.lua   bronze sword, nametag, respawn at 0,9,-8
-mods/ml_ui/init.lua       one HUD text line
-mods/ml_items/init.lua    voyage token on the lotus
-mods/ml_camera/init.lua   one look tilt. Do not extend this into a camera system.
-mods/ml_heroes/heroes/hero_example.lua   not loaded
-
-Mod storage (world): hall, wave (0 none, 1 running, 2 cleared), creeps_alive, lotus, outcome, map_built, look_ver, ready.
-
---------------------------------------------------------------------------------
-DO NOT REDO
---------------------------------------------------------------------------------
-
-Do not turn this back into a lane MOBA, a DotA game, or a strategy game.
-Do not build a locked isometric camera.
-Do not paste a modern translation of the Odyssey.
-Do not copy Warcraft or DotA names. The skill-point pattern is the only borrow.
-Do not switch the license off MIT unless the owner says so.
+mods/ml_core/init.lua       hall, gold, xp, tasks, win/lose
+mods/ml_cyclops/init.lua    cave, wine, stake, mouth, the giant
+mods/ml_map/init.lua        Greek shore
+mods/ml_creeps/init.lua     suitors
+mods/ml_journal/init.lua    four skills
+mods/ml_heroes/init.lua     bronze sword, respawn at 0,9,-8
 
 --------------------------------------------------------------------------------
 LEFT UNFINISHED
 --------------------------------------------------------------------------------
 
-Poem stops after the lotus. Next one is the cyclops.
-Carved statues and a mesh hero. The Greek look is tiles and node boxes.
-A real ContentDB upload. The MIT grant is in the repo. The package was not submitted.
-The GitHub About line may still say "a dotA game". Change that sentence on the GitHub page if it is still there.
+Poem stops after the cyclops. Next one is the bag of winds.
+Carved statues and a mesh hero.
+A real ContentDB upload.
