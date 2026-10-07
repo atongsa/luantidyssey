@@ -15,6 +15,7 @@ local function boot()
 	ml.storage:set_int("cyclops", 0)
 	ml.storage:set_int("wine", 0)
 	ml.storage:set_int("blinded", 0)
+	ml.storage:set_int("winds", 0)
 	ml.storage:set_string("outcome", "")
 	ml.storage:set_string("ready", "1")
 end
@@ -36,7 +37,10 @@ function ml.task_line()
 	if ml.storage:get_int("cyclops") ~= 1 then
 		return "Cyclops: cave east of the path. Wine, then the stake, then the mouth."
 	end
-	return "You slipped out of the cave. Next stop is not built: the bag of winds."
+	if ml.storage:get_int("winds") ~= 1 then
+		return "Bag of winds: west of the path. Right-click the sealed bag. Do not touch the loose cord."
+	end
+	return "The bag stays shut. Next stop is not built: the cannibal shore."
 end
 
 function ml.gold(player)
@@ -100,9 +104,10 @@ function ml.check_end()
 	end
 	if ml.storage:get_int("lotus") == 1
 		and ml.storage:get_int("cyclops") == 1
+		and ml.storage:get_int("winds") == 1
 		and ml.storage:get_int("wave") == 2 then
 		ml.storage:set_string("outcome", "win")
-		minetest.chat_send_all("The lotus is refused, the cave is behind you, and the hall still stands. Next stop is not built: the bag of winds.")
+		minetest.chat_send_all("The lotus is refused, the cave is behind you, the bag is shut, and the hall still stands. Next stop is not built: the cannibal shore.")
 	end
 end
 
@@ -200,6 +205,7 @@ minetest.register_chatcommand("ml_reset", {
 		ml.storage:set_int("cyclops", 0)
 		ml.storage:set_int("wine", 0)
 		ml.storage:set_int("blinded", 0)
+		ml.storage:set_int("winds", 0)
 		ml.storage:set_string("outcome", "")
 		local player = minetest.get_player_by_name(name)
 		if player then
