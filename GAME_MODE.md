@@ -100,13 +100,14 @@ Workers, a build menu, and towers are not the game. They are not scheduled. Gold
 - one wave: three suitors plus one lead suitor
 - cyclops cave east of the path. Wine, then the stake, then the mouth. The sword cannot kill him.
 - bag of winds west of the path. Right-click the sealed bag and leave it shut. The loose cord, or a punch on the bag, blows you back to the shore.
-- win if the lotus is refused, the cave is escaped, the bag stays shut, the suitors are dead, and the hall is above 0
+- cannibal shore north of the path, to the east. Right-click the outer hull. A beach landing smashes that ship and sends you back.
+- win if the lotus is refused, the cave is escaped, the bag stays shut, one ship is held off, the suitors are dead, and the hall is above 0
 - lose if the hall reaches 0
 - `/ml` prints status. `/ml_reset` (server privilege) resets the slice and gives one skill point
 
-The cannibal shore is next and is not built.
+Circe's island is next and is not built.
 
-Not built: stops after the bag of winds, carved statues. Not wanted: a locked camera, a strategy base, a second player, a DotA match.
+Not built: stops after the cannibal shore, carved statues. Not wanted: a locked camera, a strategy base, a second player, a DotA match.
 
 ## Repository map
 
@@ -123,6 +124,7 @@ Not built: stops after the bag of winds, carved statues. Not wanted: a locked ca
 | `ml_map` | Greek shore |
 | `ml_cyclops` | Cave, wine, stake, mouth, the giant |
 | `ml_winds` | Sealed bag and the loose cord |
+| `ml_shore` | Beach landings and the outer hull |
 | `ml_creeps` | Three suitors and one lead suitor |
 | `ml_heroes` | The player as Odysseus, plus a sword. `heroes/hero_example.lua` is not loaded |
 | `ml_items` | One voyage token when the lotus is refused |
@@ -132,7 +134,7 @@ Not built: stops after the bag of winds, carved statues. Not wanted: a locked ca
 
 1. The hero starts on the shore after the war. The hall on Ithaca already exists and is already under pressure.
 2. One skill point is waiting. Spend it on one of the four skills.
-3. The hero refuses the lotus, escapes the cyclops cave, then leaves the bag of winds shut. Later stops are not built.
+3. The hero refuses the lotus, escapes the cyclops cave, leaves the bag shut, then holds one ship off the cannibal shore. Later stops are not built.
 4. Suitors walk an authored path toward the hall.
 5. Each level gives one more skill point.
 6. The journey ends when those stops are done and the hall still stands, or earlier if the hall falls.
