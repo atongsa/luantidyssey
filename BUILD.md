@@ -5,38 +5,33 @@ Last session: 2026-10-13. Repo atongsa/luantidyssey, branch main.
 The game id and the install folder are luantidyssey. It is not a DotA game.
 Not run inside Luanti from the agent side. The owner tests on a laptop or desktop.
 
-The game is a free MIT 3D sandbox RPG on Luanti. Story: Odyssey. The only Warcraft III borrow is the hero's levels and four upgradable skills. Do not build a locked camera. Do not build a strategy game.
+The poem through Ithaca is playable. Do not add another story stop unless the owner asks.
+A daily job may look. If this file still says the poem is playable, that job should report progress and not change the repo.
 
 --------------------------------------------------------------------------------
-START HERE NEXT SESSION
+VOYAGE
 --------------------------------------------------------------------------------
 
-1. Read GAME_MODE.md. If the owner changed an idea, that file wins.
-2. Read this file.
-3. Do not rebuild the slice. It already runs.
-4. Next unfinished work, unless GAME_MODE.md now says otherwise:
-   The next story stop only: Circe's island. Do not jump ahead.
-   The cannibal shore, the bag of winds, the cyclops, and the Greek shore are in. Do not restart them unless the owner asks.
-5. Same commit rules: message starts with "code from man_grok", then what, then the time.
-6. New idea with no overlap: add it to GAME_MODE.md. Overlap: rewrite that old idea only.
-7. Append CHANGES.log when the repo changes. Do not paste the chat into GAME_MODE.md.
+mods/ml_voyage/init.lua. Loads after the shore and replaces ml.task_line and ml.check_end.
+You no longer win at the cannibal shore. You win only after the hall step, with the suitors dead and the hall above 0.
 
---------------------------------------------------------------------------------
-CANNIBAL SHORE
---------------------------------------------------------------------------------
+Order after the shore:
+1. Circe, west of the hall. Herb, then both companions. The cup sends you back.
+2. The dead, west of the spawn. One right-click.
+3. Singers, east of the hall. Right-click the pass. The rock sends you back.
+4. Cliff, east of the spawn. Costs 20 hall life. The whirlpool sends you back.
+5. Cattle, north-west. Sail past. Touching them loses the voyage.
+6. Long hold, north-east. Start it, wait about 25 seconds, then the raft.
+7. Carriers, south-west. Their ship.
+8. Hall step, south of the altar. Suitors must already be dead.
 
-mods/ml_shore/init.lua. A quay north of the island, east of the path, around x=6, z=40.
-Needs the bag left shut first.
-Right-click the outer hull (bronze, further north): hold that ship off. That finishes the stop.
-Right-click either beach landing: that ship is smashed and you are sent back to 0, 9, -8. Earlier stops stay done.
-Storage: shore (1 = held off), shore_ver.
-Win needs lotus + cyclops + winds + shore + suitor wave cleared + hall above 0.
-Restart Luanti after pulling so the new mod loads.
+Restart Luanti after pulling so ml_voyage loads. /ml_reset must also clear the new flags. Those clears are in ml_core.
 
 --------------------------------------------------------------------------------
 LEFT UNFINISHED
 --------------------------------------------------------------------------------
 
-Poem stops after the cannibal shore. Next one is Circe's island.
-Carved statues and a mesh hero.
-A real ContentDB upload.
+The look is still tiles and node boxes, not carved statues.
+One suitor wave only.
+ContentDB is not submitted.
+Do not start those unless the owner asks.
