@@ -39,7 +39,7 @@ local function keep_shut(player)
 	ml.storage:set_int("winds", 1)
 	ml.add_xp(player, 15)
 	ml.add_gold(player, 12)
-	minetest.chat_send_all("Odysseus leaves the bag shut. The winds stay inside. Next stop is not built: the cannibal shore.")
+	minetest.chat_send_all("Odysseus leaves the bag shut. The cannibal shore is north of the path, to the east. Do not land there.")
 	ml.check_end()
 end
 
