@@ -1,8 +1,21 @@
--- Match state for the first slice. Other mods call ml.* .
+-- Match state. Other mods call ml.* .
+-- ml_voyage replaces task_line and check_end after this file loads.
 
 ml = {
 	storage = minetest.get_mod_storage(),
 }
+
+local VOYAGE_KEYS = {
+	"lotus", "cyclops", "wine", "blinded", "winds", "shore",
+	"herb", "mate_a", "mate_b", "circe", "dead", "sirens", "scylla",
+	"cattle", "calypso", "calypso_at", "phaeacians", "ithaca",
+}
+
+local function clear_voyage_flags()
+	for _, key in ipairs(VOYAGE_KEYS) do
+		ml.storage:set_int(key, 0)
+	end
+end
 
 local function boot()
 	if ml.storage:get_string("ready") == "1" then
@@ -11,12 +24,7 @@ local function boot()
 	ml.storage:set_int("hall", 100)
 	ml.storage:set_int("wave", 0)
 	ml.storage:set_int("creeps_alive", 0)
-	ml.storage:set_int("lotus", 0)
-	ml.storage:set_int("cyclops", 0)
-	ml.storage:set_int("wine", 0)
-	ml.storage:set_int("blinded", 0)
-	ml.storage:set_int("winds", 0)
-	ml.storage:set_int("shore", 0)
+	clear_voyage_flags()
 	ml.storage:set_string("outcome", "")
 	ml.storage:set_string("ready", "1")
 end
@@ -44,7 +52,7 @@ function ml.task_line()
 	if ml.storage:get_int("shore") ~= 1 then
 		return "Cannibal shore: north of the path, to the east. Right-click the outer hull. Do not land on the beach."
 	end
-	return "One ship was held off the beach. Next stop is not built: Circe's island."
+	return "One ship was held off the beach. Circe is west of the hall."
 end
 
 function ml.gold(player)
@@ -104,15 +112,6 @@ function ml.check_end()
 		ml.storage:set_int("hall", 0)
 		ml.storage:set_string("outcome", "lose")
 		minetest.chat_send_all("The hall fell. Ithaca is lost.")
-		return
-	end
-	if ml.storage:get_int("lotus") == 1
-		and ml.storage:get_int("cyclops") == 1
-		and ml.storage:get_int("winds") == 1
-		and ml.storage:get_int("shore") == 1
-		and ml.storage:get_int("wave") == 2 then
-		ml.storage:set_string("outcome", "win")
-		minetest.chat_send_all("The lotus is refused, the cave is behind you, the bag is shut, one ship was held off, and the hall still stands. Next stop is not built: Circe's island.")
 	end
 end
 
@@ -206,12 +205,7 @@ minetest.register_chatcommand("ml_reset", {
 		ml.storage:set_int("hall", 100)
 		ml.storage:set_int("wave", 0)
 		ml.storage:set_int("creeps_alive", 0)
-		ml.storage:set_int("lotus", 0)
-		ml.storage:set_int("cyclops", 0)
-		ml.storage:set_int("wine", 0)
-		ml.storage:set_int("blinded", 0)
-		ml.storage:set_int("winds", 0)
-		ml.storage:set_int("shore", 0)
+		clear_voyage_flags()
 		ml.storage:set_string("outcome", "")
 		local player = minetest.get_player_by_name(name)
 		if player then
