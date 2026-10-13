@@ -65,7 +65,7 @@ Tasks, in poem order:
 12. The Phaeacians. They carry him home. This unlocks Ithaca.
 13. Ithaca. The hall is under siege by the suitors. Defend it, then end the journey in the hall.
 
-The voyage is a chain of tasks in the 3D world. Later stops must follow this list. The first playable slice does not need all 13.
+The voyage is a chain of tasks in the 3D world. All 13 are playable as short stops. Do not add a fourteenth stop unless the owner asks.
 
 ## Hero skills
 
@@ -88,7 +88,7 @@ Open the journal and press Learn or Upgrade. Cast with Cast, or `/skill armor`, 
 - You gain experience, levels, and spend points on the four skills.
 - The hall at Ithaca is home. Suitors pressure it. If it falls, the journey is lost.
 - Tasks follow the story list. They pay gold or experience, or they open the next stop.
-- The journey ends when the last task in the hall is done, or earlier if the hall falls.
+- The journey ends when the hall step is used, the suitors are dead, and the hall still stands. Or earlier if the hall falls, or if the cattle are touched.
 
 Workers, a build menu, and towers are not the game. They are not scheduled. Gold stones stand in for gathering until something simpler is needed.
 
@@ -96,18 +96,17 @@ Workers, a build menu, and towers are not the game. They are not scheduled. Gold
 
 - Greek shore: sea, sand, marble court, columns, bronze altar, offerings, olives, lotus stand
 - the player is Odysseus, with a bronze sword, gold, experience, a text HUD, and the journal in slot 2
-- four skills, each rank 0 to 3, one point to learn or upgrade
+- four skills, each rank 0 to 3
 - one wave: three suitors plus one lead suitor
-- cyclops cave east of the path. Wine, then the stake, then the mouth. The sword cannot kill him.
-- bag of winds west of the path. Right-click the sealed bag and leave it shut. The loose cord, or a punch on the bag, blows you back to the shore.
-- cannibal shore north of the path, to the east. Right-click the outer hull. A beach landing smashes that ship and sends you back.
-- win if the lotus is refused, the cave is escaped, the bag stays shut, one ship is held off, the suitors are dead, and the hall is above 0
-- lose if the hall reaches 0
-- `/ml` prints status. `/ml_reset` (server privilege) resets the slice and gives one skill point
+- cyclops cave, bag of winds, cannibal shore
+- Circe through the hall step, in `ml_voyage`: herb and two companions, the dead, the singers, the cliff (costs 20 hall life), the cattle (touching them is a loss), a 25-second hold, the carrying ship, then the hall step
+- win only at the hall step, with the suitors dead and the hall above 0
+- lose if the hall reaches 0, or if the cattle are touched
+- `/ml` prints status. `/ml_reset` (server privilege) resets the voyage and gives one skill point
 
-Circe's island is next and is not built.
+The poem list is playable. Do not add another stop unless the owner asks.
 
-Not built: stops after the cannibal shore, carved statues. Not wanted: a locked camera, a strategy base, a second player, a DotA match.
+Not built: carved statues, a mesh hero, more than one suitor wave, a ContentDB upload. Not wanted: a locked camera, a strategy base, a second player, a DotA match.
 
 ## Repository map
 
@@ -118,13 +117,14 @@ Not built: stops after the cannibal shore, carved statues. Not wanted: a locked 
 | `CHANGES.log` | Repo changes only. Append. Not an idea diary. |
 | `PACKAGING.log` | Local test and zip layout. |
 | `LICENSE` | MIT. This game is open source. |
-| `ml_core` | Hall life, gold, experience, levels, skill points, win and loss |
+| `ml_core` | Hall life, gold, experience, levels, skill points, reset |
 | `ml_journal` | The four skills and their ranks |
 | `ml_camera` | A one-time look tilt. Not a special camera. Leave it. |
 | `ml_map` | Greek shore |
 | `ml_cyclops` | Cave, wine, stake, mouth, the giant |
 | `ml_winds` | Sealed bag and the loose cord |
 | `ml_shore` | Beach landings and the outer hull |
+| `ml_voyage` | Circe through the hall step. Replaces the task line and the win check. |
 | `ml_creeps` | Three suitors and one lead suitor |
 | `ml_heroes` | The player as Odysseus, plus a sword. `heroes/hero_example.lua` is not loaded |
 | `ml_items` | One voyage token when the lotus is refused |
@@ -134,12 +134,10 @@ Not built: stops after the cannibal shore, carved statues. Not wanted: a locked 
 
 1. The hero starts on the shore after the war. The hall on Ithaca already exists and is already under pressure.
 2. One skill point is waiting. Spend it on one of the four skills.
-3. The hero refuses the lotus, escapes the cyclops cave, leaves the bag shut, then holds one ship off the cannibal shore. Later stops are not built.
-4. Suitors walk an authored path toward the hall.
+3. The hero clears the stops in the story list, through the hall step.
+4. Suitors walk an authored path toward the hall. They must be dead before the hall step counts.
 5. Each level gives one more skill point.
-6. The journey ends when those stops are done and the hall still stands, or earlier if the hall falls.
-
-Numbers that are not written here get decided when that system is built, then written into this file in place of this sentence.
+6. The journey ends at the hall step, or earlier if the hall falls or the cattle are touched.
 
 ## Content rules
 
