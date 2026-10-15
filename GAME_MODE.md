@@ -88,7 +88,8 @@ Open the journal and press Learn or Upgrade. Cast with Cast, or `/skill armor`, 
 - You gain experience, levels, and spend points on the four skills.
 - The hall at Ithaca is home. Suitors pressure it. If it falls, the journey is lost.
 - Tasks follow the story list. They pay gold or experience, or they open the next stop.
-- The journey ends when the hall step is used, the suitors are dead, and the hall still stands. Or earlier if the hall falls, or if the cattle are touched.
+- A way post stands at each place. Point at it. The words name the place.
+- The journey ends at the hall step, after the last suitor band, while the hall still stands. Or earlier if the hall falls, or if the cattle are touched.
 
 Workers, a build menu, and towers are not the game. They are not scheduled. Gold stones stand in for gathering until something simpler is needed.
 
@@ -97,16 +98,17 @@ Workers, a build menu, and towers are not the game. They are not scheduled. Gold
 - Greek shore: sea, sand, marble court, columns, bronze altar, offerings, olives, lotus stand
 - the player is Odysseus, with a bronze sword, gold, experience, a text HUD, and the journal in slot 2
 - four skills, each rank 0 to 3
-- one wave: three suitors plus one lead suitor
+- two suitor bands. The first starts with the world. The last starts when the carrying ship is taken, and only after the first band is gone.
+- a marble way post at each stop. Point at it.
 - cyclops cave, bag of winds, cannibal shore
 - Circe through the hall step, in `ml_voyage`: herb and two companions, the dead, the singers, the cliff (costs 20 hall life), the cattle (touching them is a loss), a 25-second hold, the carrying ship, then the hall step
-- win only at the hall step, with the suitors dead and the hall above 0
+- win only at the hall step, after the last band, with the hall above 0
 - lose if the hall reaches 0, or if the cattle are touched
 - `/ml` prints status. `/ml_reset` (server privilege) resets the voyage and gives one skill point
 
 The poem list is playable. Do not add another stop unless the owner asks.
 
-Not built: carved statues, a mesh hero, more than one suitor wave, a ContentDB upload. Not wanted: a locked camera, a strategy base, a second player, a DotA match.
+Not built: carved statues, a mesh hero, a ContentDB upload. Not wanted: a locked camera, a strategy base, a second player, a DotA match.
 
 ## Repository map
 
@@ -124,8 +126,9 @@ Not built: carved statues, a mesh hero, more than one suitor wave, a ContentDB u
 | `ml_cyclops` | Cave, wine, stake, mouth, the giant |
 | `ml_winds` | Sealed bag and the loose cord |
 | `ml_shore` | Beach landings and the outer hull |
-| `ml_voyage` | Circe through the hall step. Replaces the task line and the win check. |
-| `ml_creeps` | Three suitors and one lead suitor |
+| `ml_voyage` | Circe through the hall step, way posts, the win check |
+| `ml_creeps` | First suitor band, and the last band |
+| `ml_late` | Starts the last band if an old save already took the ship |
 | `ml_heroes` | The player as Odysseus, plus a sword. `heroes/hero_example.lua` is not loaded |
 | `ml_items` | One voyage token when the lotus is refused |
 | `ml_ui` | Text HUD: gold, level, hall, task, skill ranks |
@@ -134,8 +137,8 @@ Not built: carved statues, a mesh hero, more than one suitor wave, a ContentDB u
 
 1. The hero starts on the shore after the war. The hall on Ithaca already exists and is already under pressure.
 2. One skill point is waiting. Spend it on one of the four skills.
-3. The hero clears the stops in the story list, through the hall step.
-4. Suitors walk an authored path toward the hall. They must be dead before the hall step counts.
+3. The hero clears the stops in the story list. Way posts name the places.
+4. The first suitors walk toward the hall. The carrying ship brings a last band. Both must be gone before the hall step counts.
 5. Each level gives one more skill point.
 6. The journey ends at the hall step, or earlier if the hall falls or the cattle are touched.
 
