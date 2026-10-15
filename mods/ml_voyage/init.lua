@@ -1,4 +1,5 @@
 -- Circe through the hall. Each stop stays in the poem's order.
+-- Way posts name the places. The carrying ship starts the last suitor band.
 
 local SPAWN = {x = 0, y = 9, z = -8}
 
@@ -63,6 +64,26 @@ local function simple(name, desc, tile, box, fn)
 	})
 end
 
+minetest.register_node("ml_voyage:post", {
+	description = "Way post",
+	tiles = {"ml_marble.png"},
+	drawtype = "nodebox",
+	paramtype = "light",
+	sunlight_propagates = true,
+	groups = {not_in_creative_inventory = 1},
+	node_box = {
+		type = "fixed",
+		fixed = {-0.12, -0.5, -0.12, 0.12, 0.5, 0.12},
+	},
+	on_dig = function() end,
+})
+
+local function post(x, y, z, text)
+	local pos = {x = x, y = y, z = z}
+	minetest.set_node(pos, {name = "ml_voyage:post"})
+	minetest.get_meta(pos):set_string("infotext", text)
+end
+
 simple("ml_voyage:cup", "Circe's cup", "ml_bronze.png", {-0.2, -0.5, -0.2, 0.2, -0.1, 0.2}, function(player)
 	if not gate(player, "shore", "Hold one ship off the beach first.") then
 		return
@@ -109,7 +130,7 @@ local function restore(player, which)
 	ml.storage:set_int(which, 1)
 	tell(player, "The herb undoes it. He is himself again.")
 	if ml.storage:get_int("mate_a") == 1 and ml.storage:get_int("mate_b") == 1 then
-		mark(player, "circe", 15, 12, "Both companions are restored. Next: speak to the dead, west of the spawn.")
+		mark(player, "circe", 15, 12, "Both companions are restored. Next: the dead, west of the spawn.")
 	end
 end
 
@@ -124,7 +145,7 @@ simple("ml_voyage:dead", "Stone of the dead", "ml_stone.png", {-0.35, -0.5, -0.3
 	if not gate(player, "circe", "Restore the companions first.") then
 		return
 	end
-	mark(player, "dead", 15, 10, "The dead say: pass the singers without stopping, pay the cliff, do not touch the cattle, leave the long hold, and the ship after that carries you to the hall.")
+	mark(player, "dead", 15, 10, "The dead say: pass the singers without stopping, pay the cliff, do not touch the cattle, leave the long hold, and the ship after that brings the last suitors.")
 end)
 
 simple("ml_voyage:song", "Singers' rock", "ml_sea.png", {-0.4, -0.5, -0.4, 0.4, 0.3, 0.4}, function(player)
@@ -221,7 +242,7 @@ simple("ml_voyage:raft", "Raft off the hold", "ml_bronze.png",
 			tell(player, "Not yet. The hold is not finished.")
 			return
 		end
-		mark(player, "calypso", 15, 10, "Odysseus leaves the long hold. Next: the ship to the south-west. It carries him toward the hall.")
+		mark(player, "calypso", 15, 10, "Odysseus leaves the long hold. Next: the ship to the south-west. It brings the last suitors.")
 	end)
 
 simple("ml_voyage:ship", "Ship of the carriers", "ml_bronze.png",
@@ -230,15 +251,29 @@ simple("ml_voyage:ship", "Ship of the carriers", "ml_bronze.png",
 		if not gate(player, "calypso", "Leave the long hold first.") then
 			return
 		end
-		mark(player, "phaeacians", 20, 15, "The ship carries Odysseus to Ithaca. Clear the suitors, then right-click the hall step south of the altar.")
+		if ml.storage:get_int("phaeacians") == 1 then
+			tell(player, "The ship has already landed. Face the last suitors, then the hall step.")
+			return
+		end
+		local wave = ml.storage:get_int("wave")
+		if wave < 2 then
+			tell(player, "The first suitors are still on the approach. Clear them, then take this ship.")
+			return
+		end
+		if wave ~= 2 or not ml.start_last_wave or not ml.start_last_wave() then
+			tell(player, "The last band is already ashore.")
+			return
+		end
+		mark(player, "phaeacians", 20, 15, "The ship carries Odysseus home. A last band of suitors is on the approach. Then the hall step.")
 	end)
 
 simple("ml_voyage:hallstep", "Hall step", "ml_marble.png", {-0.45, -0.5, -0.45, 0.45, -0.3, 0.45}, function(player)
 	if not gate(player, "phaeacians", "The carrying ship has not brought you yet.") then
 		return
 	end
-	if ml.storage:get_int("wave") ~= 2 then
-		tell(player, "The suitors are still on the approach.")
+	local wave = ml.storage:get_int("wave")
+	if wave < 4 then
+		tell(player, "The last suitors are still on the approach.")
 		return
 	end
 	if ml.hall() <= 0 then
@@ -271,10 +306,13 @@ function ml.task_line()
 		return "Long hold: north-east. Start it, wait, then take the raft."
 	end
 	if ml.storage:get_int("phaeacians") ~= 1 then
-		return "Carriers: south-west. Right-click their ship."
+		return "Carriers: south-west. Their ship starts the last suitors. Clear the first band first."
+	end
+	if ml.storage:get_int("wave") < 4 then
+		return "Ithaca: the last suitors are on the approach. Then the hall step."
 	end
 	if ml.storage:get_int("ithaca") ~= 1 then
-		return "Ithaca: clear the suitors, then right-click the hall step."
+		return "Ithaca: right-click the hall step, south of the altar."
 	end
 	return "The hall is yours."
 end
@@ -289,7 +327,7 @@ function ml.check_end()
 		minetest.chat_send_all("The hall fell. Ithaca is lost.")
 		return
 	end
-	if ml.storage:get_int("ithaca") == 1 and ml.storage:get_int("wave") == 2 then
+	if ml.storage:get_int("ithaca") == 1 and ml.storage:get_int("wave") == 4 then
 		ml.storage:set_string("outcome", "win")
 		minetest.chat_send_all("The voyage is done. The hall still stands.")
 	end
@@ -329,7 +367,19 @@ function ml.build_voyage()
 	put(12, 9, 33, "ml_voyage:raft")
 	put(-6, 9, -8, "ml_voyage:ship")
 	put(2, 9, -5, "ml_voyage:hallstep")
-	ml.storage:set_int("voyage_ver", 1)
+	post(4, 9, -8, "Way post. Point at these posts. The line above says which place is next.")
+	post(6, 9, 17, "Cyclops. Wine, then the stake, then the mouth. East of the path.")
+	post(-12, 9, 15, "Bag of winds. Leave it shut. The cord sends you back.")
+	post(4, 9, 39, "Cannibal shore. The outer hull is further north. Do not land.")
+	post(-12, 9, 4, "Circe. Take the herb, then both companions. Do not drink.")
+	post(-13, 9, -6, "The dead. Right-click the stone.")
+	post(11, 9, 6, "Singers. Right-click the pass. Do not stop at the rock.")
+	post(11, 9, -5, "Cliff. It costs the hall. The whirlpool sends you back.")
+	post(-9, 9, 33, "Cattle. Do not touch them. Sail past.")
+	post(11, 9, 30, "Long hold. Start it, wait, then the raft.")
+	post(-7, 9, -9, "Carriers. Clear the first suitors, then this ship brings the last band.")
+	post(3, 9, -4, "Hall step. Only after the last suitors are gone.")
+	ml.storage:set_int("voyage_ver", 2)
 end
 
 local old_build = ml.build_map
@@ -340,6 +390,6 @@ function ml.build_map()
 	ml.build_voyage()
 end
 
-if ml.storage:get_int("voyage_ver") < 1 then
+if ml.storage:get_int("voyage_ver") < 2 then
 	ml.build_voyage()
 end
