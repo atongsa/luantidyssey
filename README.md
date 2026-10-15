@@ -10,7 +10,7 @@ The look is Greek: stone, bronze, and the sea. Names of places and skills that a
 
 [INSTALL.md](INSTALL.md). Short version: install Luanti 5.6 or newer, put this folder in Luanti's `games` directory as `luantidyssey`, and make a new world with that game selected.
 
-Zip of the current code: [main.zip](https://github.com/atongsa/luantidyssey/archive/refs/heads/main.zip). After unzip, rename `luantidyssey-main` to `luantidyssey`.
+Install zip: [luantidyssey.zip](https://github.com/atongsa/luantidyssey/releases/download/v1.2.0/luantidyssey.zip). Unzip it. The folder is already named `luantidyssey`.
 
 ## License
 

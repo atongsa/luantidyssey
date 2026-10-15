@@ -22,11 +22,13 @@ Create `games` if it is not there.
 
 ## 2. Get the game
 
-**Zip.** Download:
+**Release zip.** This is the one to install. The folder inside is already named `luantidyssey`. Do not rename it.
 
-[https://github.com/atongsa/luantidyssey/archive/refs/heads/main.zip](https://github.com/atongsa/luantidyssey/archive/refs/heads/main.zip)
+[luantidyssey.zip](https://github.com/atongsa/luantidyssey/releases/download/v1.2.0/luantidyssey.zip)
 
-Unzip it. The folder inside is named `luantidyssey-main`. Rename that folder to `luantidyssey`.
+Unzip it. You should see one folder, `luantidyssey`, and `game.conf` directly inside that folder.
+
+The source zip from the green Code button is different. That one is named `luantidyssey-main` and you would have to rename it. Use the release zip above.
 
 **Git**, if you already use it. From inside the `games` folder:
 
