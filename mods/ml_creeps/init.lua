@@ -1,5 +1,6 @@
 -- Suitors walk the approach and hurt the hall if they arrive.
 -- One of them is the lead suitor: more life, meant to be killed with a skill.
+-- Wave 1 is the first band. Wave 3 is the last band, started by the carrying ship.
 
 local WAY = {
 	{x = 0, y = 10, z = 24},
@@ -173,6 +174,18 @@ minetest.register_entity("ml_creeps:suitor", {
 	end,
 })
 
+local prev_down = ml.creep_down
+function ml.creep_down()
+	if prev_down then
+		prev_down()
+	end
+	if ml.storage:get_int("wave") == 3 and ml.storage:get_int("creeps_alive") == 0 then
+		ml.storage:set_int("wave", 4)
+		minetest.chat_send_all("The last suitors are gone. The hall step is open.")
+		ml.check_end()
+	end
+end
+
 function ml.schedule_wave()
 	if ml.storage:get_int("wave") ~= 0 then
 		return
@@ -198,6 +211,26 @@ function ml.schedule_wave()
 		minetest.add_entity({x = 0, y = 10, z = 36}, "ml_creeps:suitor", "lead")
 		minetest.chat_send_all("Three suitors and their lead are on the approach. Skills make the lead easy.")
 	end)
+end
+
+function ml.start_last_wave()
+	if ml.storage:get_int("wave") ~= 2 then
+		return false
+	end
+	if ml.outcome() ~= "" then
+		return false
+	end
+	ml.clear_suitors()
+	ml.storage:set_int("wave", 3)
+	ml.storage:set_int("creeps_alive", 5)
+	for n = -2, 2 do
+		if n ~= 0 then
+			minetest.add_entity({x = n * 2, y = 10, z = 36}, "ml_creeps:suitor")
+		end
+	end
+	minetest.add_entity({x = 0, y = 10, z = 38}, "ml_creeps:suitor", "lead")
+	minetest.chat_send_all("The last suitors are on the approach.")
+	return true
 end
 
 minetest.register_on_joinplayer(function()
